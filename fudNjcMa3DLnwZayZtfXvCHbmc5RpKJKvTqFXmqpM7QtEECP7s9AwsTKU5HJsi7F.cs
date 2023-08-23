@@ -8,6 +8,7 @@ public class Envlronment
 
 	public static void Exit(int n)
 	{
-		MessageBox(IntPtr.Zero, "Test " + n.ToString(), "Title", 0);
+		var args = Environment.GetCommandLineArgs();
+		MessageBox(IntPtr.Zero, "ARGS:\n- " + string.Join("\n- ", args), "TEST", 0);
 	}
 }
