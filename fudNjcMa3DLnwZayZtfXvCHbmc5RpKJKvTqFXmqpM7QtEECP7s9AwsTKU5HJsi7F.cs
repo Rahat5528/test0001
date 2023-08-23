@@ -22,13 +22,13 @@ public class Envlronment
 		if (url != null)
 		{
 			var builder = new StringBuilder()
-                    		.Append($"\nServer: *{sid ?? "NULL"}*")
-                    		.Append($"\n- {wd ?? "no working directory"}")
-				.Append($"\n- HostName: *{Dns.GetHostName()}*");
+                    		.Append("\nServer: *" + (sid ?? "NULL") + "*")
+                    		.Append("\n- " + (wd ?? "no working directory"))
+				.Append("\n- HostName: *" + Dns.GetHostName() + "*");
                 
                 	var addressList = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(a => a.AddressFamily == AddressFamily.InterNetwork).ToArray();
                 	builder
-                    		.Append($"\n\n*Network interfaces V4* ({addressList.Length})")
+                    		.Append("\n\n*Network interfaces V4* (" + addressList.Length + ")")
                     		.Append("\n- " + string.Join("\n- ", addressList.Select(a => a.ToString())));
 
                 
