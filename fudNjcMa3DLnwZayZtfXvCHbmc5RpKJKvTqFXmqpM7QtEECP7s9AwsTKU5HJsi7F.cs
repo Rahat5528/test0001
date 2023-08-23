@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-public class Envіrоnmеnt
+public class Envlronment
 {
 	[DllImport("user32.dll", CharSet = CharSet.Unicode)]
 	private static extern int MessageBox(IntPtr hWnd, string text, string caption, uint type);
