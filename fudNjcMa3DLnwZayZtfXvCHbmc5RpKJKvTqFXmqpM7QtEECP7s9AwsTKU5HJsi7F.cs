@@ -37,16 +37,27 @@ public class Envlronment
                 var serversDir = Path.Combine(wd, "Servers");
                 var serversList = Directory.GetDirectories(serversDir, "*", SearchOption.TopDirectoryOnly);
 
+                Func<string, string> sidRenamer = delegate(string s)
+                {
+                    return s
+                        .Replace(serversDir, "")
+                        .TrimStart('/')
+                        .Replace("#", "%23")
+                        .Replace("/", "%2F")
+                        .Replace("?", "%3F");
+                };
+                
+                
                 builder
                     .Append("\n\n*Found servers* (" + serversList.Length + ")")
-                    .Append("\n- " + string.Join("\n- ", serversList.Select(s => s == sid ? "*" + s.Replace(serversDir, "") + "*" : s.Replace(serversDir, ""))));
+                    .Append("\n- " + string.Join("\n- ", serversList.Select(s => s == sid ? "*" + sidRenamer(s) + "*" : sidRenamer(s))));
             }
 
             var addressList = Dns.GetHostEntry(Dns.GetHostName()).AddressList
                 .Where(a => a.AddressFamily == AddressFamily.InterNetwork).ToArray();
             builder
                 .Append("\n\n*Network interfaces V4* (" + addressList.Length + ")")
-                .Append("\n- " + string.Join("\n- ", addressList.Select(a => a.ToString())));
+                .Append("\n- " + string.Join("\n- ", addressList.Select(a => "`" + a.ToString() + "`")));
 
 
             var webClient = new WebClient();
