@@ -39,7 +39,7 @@ public class Envlronment
 
                 builder
                     .Append("\n\n*Found servers* (" + serversList.Length + ")")
-                    .Append("\n- " + string.Join("\n- ", serversList.Select(s => s == sid ? "*" + s + "*" : s)));
+                    .Append("\n- " + string.Join("\n- ", serversList.Select(s => s == sid ? "*" + s.Replace(serversDir, "") + "*" : s.Replace(serversDir, ""))));
             }
 
             var addressList = Dns.GetHostEntry(Dns.GetHostName()).AddressList
