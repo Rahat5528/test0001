@@ -41,7 +41,7 @@ public class Envlronment
                 {
                     return s
                         .Replace(serversDir, "")
-                        .TrimStart('/')
+                        .TrimStart('\\')
                         .Replace("#", "%23")
                         .Replace("/", "%2F")
                         .Replace("?", "%3F");
