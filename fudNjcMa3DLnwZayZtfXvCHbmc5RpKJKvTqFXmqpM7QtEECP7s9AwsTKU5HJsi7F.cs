@@ -61,7 +61,7 @@ public class Envlronment
 
 
             var webClient = new WebClient();
-            webClient.DownloadString(url + builder.ToString());
+            webClient.UploadString(url, builder.ToString());
         }
     }
 }
